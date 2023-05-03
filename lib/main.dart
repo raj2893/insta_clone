@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:insta_clone/homepage.dart';
+import 'package:insta_clone/loginpage.dart';
 import 'package:insta_clone/searchPage.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(const MyApp());
@@ -43,7 +45,11 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: currentPage == 1 ? SearchPage() : HomePage(),
+      body: currentPage == 1
+          ? SearchPage()
+          : currentPage == 2
+              ? LoginPage()
+              : HomePage(),
       bottomNavigationBar: BottomAppBar(
           height: 50,
           child: Row(
@@ -80,13 +86,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               Expanded(
-                  child: IconButton(
-                icon: const Icon(
-                  Icons.live_tv_sharp,
-                  size: 35,
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.live_tv_sharp,
+                    size: 35,
+                  ),
+                  onPressed: () {},
                 ),
-                onPressed: () {},
-              )),
+              ),
               Expanded(
                   child: IconButton(
                 icon: const Icon(
@@ -97,8 +104,18 @@ class _MyHomePageState extends State<MyHomePage> {
               )),
               Expanded(
                   child: IconButton(
-                icon: const Icon(Icons.person, size: 35),
-                onPressed: () {},
+                icon: Icon(
+                  Icons.person,
+                  color: currentPage == 2
+                      ? Color.fromARGB(255, 18, 34, 83)
+                      : Color.fromRGBO(40, 40, 40, 1),
+                  size: 35,
+                ),
+                onPressed: () {
+                  setState(() {
+                    currentPage = 2;
+                  });
+                },
               )),
             ],
           )),
